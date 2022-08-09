@@ -48,9 +48,8 @@ typedef struct flag_s
 {
 unsigned char flag;
 unsigned char value;
-} flag_t
+} flag_t;
 int _printf(const char *format, ...);
-{
 unsigned int convert_c(va_list args, buffer_t *output,
 unsigned char flags, int wid, int prec, unsigned char len);
 unsigned int convert_s(va_list args, buffer_t *output,
