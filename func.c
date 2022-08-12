@@ -36,3 +36,51 @@ int _print_string(va_list args)
 	}
 	return (0);
 }
+
+/**
+ * _print_int - Prints a integer
+ * @args: arguments
+ *
+ * Return: length of the string
+ */
+
+int _print_int(va_list args)
+{
+	int count = 1;
+	int i = 0;
+	unsigned int j = 0;
+
+	j = va_arg(args, int);
+	i = j;
+	if (i < 0)
+	{
+		_write('-');
+		i = i * -1;
+		j = i;
+		count += 1;
+	}
+	while (j > 9)
+	{
+		j = j / 10;
+		count++;
+	}
+	recursion_int(i);
+	return (count);
+}
+
+/**
+ * recursion_int - Prints a integer
+ * @a: integer to print
+ *
+ * Return: void
+ */
+
+void recursion_int(int a)
+{
+	unsigned int t;
+
+	t = a;
+	if (t / 10)
+	recursion_int(t / 10);
+	_write(t % 10 + '0');
+}

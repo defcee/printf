@@ -58,15 +58,17 @@ typedef struct specifiers
 {
 char *specifier;
 int (*f)(va_list args);
-} spc_dt;
+} spc;
 int _printf(const char *format, ...);
 int _write(char c);
 int _print(const char *format, va_list args);
-int _print_spec(char format, va_list args);
-int _print_invalid_spec(char prev_format, char format, int count);
-int _validate(char _type);
+int spec(char format, va_list args);
+int invalid(char prev_format, char format, int count);
+int validate(char _type);
 int _print_char(va_list args);
 int _print_string(va_list args);
+int _print_int(va_list args);
+void recursion_int(int a);
 unsigned int convert_c(va_list args, buffer_t *output,
 unsigned char flags, int wid, int prec, unsigned char len);
 unsigned int convert_s(va_list args, buffer_t *output,

@@ -1,5 +1,5 @@
-#include "main.h"
 #include <stdlib.h>
+#include "main.h"
 
 /**
  * _print - print
@@ -25,13 +25,13 @@ int _print(const char *format, va_list args)
 				i++;
 			if (format[i] == '%')
 				count += _write(format[i]);
-			if (_validate(format[i]) == 0)
+			if (validate(format[i]) == 0)
 			{
-				count = _print_invalid_spec(format[i - 1], format[i], count);
+				count = invalid(format[i - 1], format[i], count);
 			}
 			else
 			{
-				count += _print_spec(format[i], args);
+				count += spec(format[i], args);
 			}
 		}
 		else
@@ -44,44 +44,46 @@ int _print(const char *format, va_list args)
 }
 
 /**
- * _print_spec - specifier
+ * spec - specifier
  * @format: format
  * @args: args
  *
  * Return: length
  */
-int _print_spec(char format, va_list args)
+int spec(char format, va_list args)
 {
 	int i  = 0, length = 0;
-	spc_dt _types[] = {
+	spc types[] = {
 		{"c", _print_char},
 		{"s", _print_string},
+		{"d", _print_int},
+		{"i", _print_int},
 		{NULL, NULL}
 	};
 
-	while (_types[i].specifier)
+	while (types[i].specifier)
 	{
-		if (*_types[i].specifier == format)
-			length = _types[i].f(args);
+		if (*types[i].specifier == format)
+			length = types[i].f(args);
 		i++;
 	}
 	return (length);
 }
 
 /**
- * _validate - validate
- * @_type: type
+ * validate - validate
+ * @type: type
  *
  * Return: 0
  */
-int _validate(char _type)
+int validate(char type)
 {
-	char _types[] = {'c', 's', 'd', 'i', '%'};
+	char types[] = {'c', 's', 'd', 'i', '%'};
 	int i = 0;
 
-	while (_types[i])
+	while (types[i])
 	{
-		if (_types[i] == _type)
+		if (types[i] == type)
 			return (1);
 		i++;
 	}
@@ -89,17 +91,17 @@ return (0);
 }
 
 /**
- * _print_invalid_spec - invalid
- * @prev_format: previos
+ * invalid - invalid
+ * @prev: previos
  * @format: format
  * @count: len
  *
  * Return: count
  */
-int _print_invalid_spec(char prev_format, char format, int count)
+int invalid(char prev, char format, int count)
 {
 	count += _write('%');
-	if (prev_format == ' ')
+	if (prev == ' ')
 	{
 		count += _write(' ');
 		count += _write(format);
